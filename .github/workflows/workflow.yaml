@@ -1,19 +1,26 @@
-name: Continuos Integration
+name: Deploy to GitHub Pages
 
-on: push
+on:
+  push:
+    branches:
+      - main
 
 jobs:
-  continuos-integration:
+  build-and-deploy:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v3
-      - name: Using Node.js 
-        uses: actions/setup-node@v2
-        with:
-          node-version: 20.
-      - name: run install, build and test
+      - name: Checkout do repositório
+        uses: actions/checkout@v3
+
+      - name: Verificar se index.html existe
         run: |
-          npm install
-          npm run build
-          npm run test
+          if [ ! -f public/index.html ]; then
+            echo "Arquivo index.html não encontrado!"
+            exit 1
+          fi
+
+      - name: Deploy para GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
