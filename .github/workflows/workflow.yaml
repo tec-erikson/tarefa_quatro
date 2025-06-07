@@ -1,0 +1,11 @@
+image: alpine:latest
+
+pages:
+  stage: deploy
+  script:
+   - echo "Publicando site..."
+  artifacts:
+   paths:
+    - public 
+  only:
+   - main
