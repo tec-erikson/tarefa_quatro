@@ -1,6 +1,6 @@
 name: Continuos Integration
 
-on: pull_request
+on: push
 
 jobs:
   continuos-integration:
@@ -17,4 +17,3 @@ jobs:
           npm install
           npm run build
           npm run test
-          
